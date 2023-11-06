@@ -1,12 +1,12 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :check_permission, only: [:dashboard]
-
 
   def home
-  end
-  def dashboard
 
+  end
+
+  def dashboard
+    before_action :authenticate_user!
+    before_action :check_permission, only: [:dashboard]
   end
 
   private
