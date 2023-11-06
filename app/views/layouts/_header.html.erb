@@ -1,4 +1,9 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<style>
+    #element-to-toggle {
+        display: none;
+    }
+</style>
+<nav class="navbar navbar-expand-lg bg-body-tertiary" id=xnavbar>
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,22 +31,51 @@
         <li class="nav-item">
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link ">
+           xxx
+
+          </a>
+        </li>
       </ul>
-      <form class="d-flex" role="search">
+      <form class="d-flex" role="search" style="margin-right:200px;display:none !important;">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
 
-
       <% if user_signed_in? %>
-          <%= link_to 'Edit profile', edit_user_registration_path, class: 'btn btn-outline-success' %> |
+        <div class="btn-group" style="margin-right:10px;">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= "Hi " + current_user.first_name + " you are logged as (" + current_user.role + ")" %>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-lg-end">
+            <% if superadmin? %>
+              <%= link_to 'Super Manager', dasuperadmin_path, class: 'dropdown-item bcksup' %>
+            <% elsif admin? %>
 
-         <%= link_to "Logout" , destroy_user_session_path, method: :delete,data: { turbo_method: 'delete', turbo_confirm: 'Really?' } , class: 'btn btn-outline-success'%>
+              <%= link_to 'Admin Manager', dasadmin_path, class: 'dropdown-item bckadm' %>
+            <% elsif utente? %>
+
+              <%= link_to 'User Manager', dasuser_path, class: 'dropdown-item bckusr' %>
+            <% end %>
+            <hr class="hr pad_zero"  />
+            <%= link_to 'Edit profile', edit_user_registration_path, class: 'dropdown-item' %>
+            <hr class="hr pad_zero"  />
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, data: { turbo_method: 'delete', turbo_confirm: 'Really?' }, class: 'dropdown-item' %>
+
+          </ul>
+        </div>
+
+
       <% else %>
-         <%= link_to "Login" , new_user_session_path,  class: 'btn btn-outline-success' %>
-        <%= link_to "Registrati" , new_user_registration_path,  class: 'btn btn-outline-success' %>
-        <% end %>
+        <%= link_to "Login", new_user_session_path, class: 'btn btn-outline-success' %>
+        <%= link_to "Registrati", new_user_registration_path, class: 'btn btn-outline-success' %>
+      <% end %>
+
+
+
 
     </div>
   </div>
 </nav>
+

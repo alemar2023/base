@@ -11,9 +11,14 @@ class User < ApplicationRecord
     self.foo
   end
 
+  helper_method :superadmin?
+  helper_method :admin?
+  helper_method :user?
 
   def foo
     # attenzione ad usare update_columns per non portare spazzatura
     #self.update_columns()
   end
+
+
 end
